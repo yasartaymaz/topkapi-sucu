@@ -132,7 +132,7 @@ L --> M[Hazırlanıyor]
 M --> N[Dağıtımda]
 N --> O[Teslim edildi]
 
-O --> P[Sipariş geçmişine eklenir]
+O --> P[Sipariş geçmişine eklenir]```
 
 ## Kullanılacak Yapay Zekâ Araçları
 
