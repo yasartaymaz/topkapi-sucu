@@ -109,6 +109,7 @@ Uygulama iki farklı kullanıcı türüne hizmet etmektedir: **su bayileri
 ## Sistem Akış Diyagramı
 
 ```mermaid
+
 flowchart TD
 
 A[Vendor kayıt olur] --> B[Dükkan bilgilerini girer]
