@@ -109,7 +109,6 @@ Uygulama iki farklı kullanıcı türüne hizmet etmektedir: **su bayileri
 ## Sistem Akış Diyagramı
 
 ```mermaid
-
 flowchart TD
 
 A[Vendor kayıt olur] --> B[Dükkan bilgilerini girer]
@@ -133,7 +132,8 @@ L --> M[Hazırlanıyor]
 M --> N[Dağıtımda]
 N --> O[Teslim edildi]
 
-O --> P[Sipariş geçmişine eklenir]```
+O --> P[Sipariş geçmişine eklenir]
+```
 
 ## Kullanılacak Yapay Zekâ Araçları
 
