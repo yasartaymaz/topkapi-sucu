@@ -38,9 +38,10 @@ export default function VendorProducts() {
     enabled: !!userId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('vendors_active' as any)
+        .from('vendors')
         .select('id')
         .eq('profile_id', userId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -53,9 +54,10 @@ export default function VendorProducts() {
     enabled: !!vendorId,
     queryFn: async (): Promise<Product[]> => {
       const { data, error } = await supabase
-        .from('products_active' as any)
+        .from('products')
         .select('id, name, brand, volume_liters, price, image_path, stock_status')
         .eq('vendor_id', vendorId!)
+        .is('deleted_at', null)
         .order('name');
       if (error) throw error;
       return (data ?? []) as Product[];

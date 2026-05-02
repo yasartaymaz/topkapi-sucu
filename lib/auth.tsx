@@ -41,9 +41,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
     const { data, error } = await supabase
-      .from('profiles_active')
+      .from('profiles')
       .select('id, role, full_name, phone, expo_push_token')
       .eq('id', userId)
+      .is('deleted_at', null)
       .maybeSingle();
     if (error) {
       // Tablo henüz yoksa veya okuma izni yoksa sessiz geç — kullanıcı role-select'e yönlenir

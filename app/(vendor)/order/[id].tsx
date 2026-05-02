@@ -62,9 +62,10 @@ export default function VendorOrderDetail() {
     enabled: !!orderId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('orders_active' as any)
+        .from('orders')
         .select('*')
         .eq('id', orderId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -144,7 +145,7 @@ export default function VendorOrderDetail() {
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 12 }}>
+      <ScrollView contentContainerStyle={{ padding: 20, gap: 12, paddingBottom: transitions.length > 0 ? 8 : 90 }}>
         <View className="rounded-2xl bg-white p-4">
           <View className="flex-row items-center justify-between">
             <Text className="text-base font-bold text-slate-900">
@@ -267,27 +268,28 @@ export default function VendorOrderDetail() {
           </View>
         </View>
 
-        {transitions.length > 0 && (
-          <View className="gap-2">
-            {transitions.map((t) => {
-              const destructive = t.next === 'canceled';
-              return (
-                <Pressable
-                  key={t.next}
-                  onPress={() => updateStatus(t.next, t.label)}
-                  className={`h-14 items-center justify-center rounded-2xl ${destructive ? 'border border-red-200 bg-white active:bg-red-50' : 'bg-brand-500 active:bg-brand-600'}`}
-                >
-                  <Text
-                    className={`text-base font-semibold ${destructive ? 'text-red-700' : 'text-white'}`}
-                  >
-                    {t.label}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-        )}
       </ScrollView>
+
+      {transitions.length > 0 && (
+        <View className="gap-2 border-t border-slate-100 bg-white px-5 py-4">
+          {transitions.map((t) => {
+            const destructive = t.next === 'canceled';
+            return (
+              <Pressable
+                key={t.next}
+                onPress={() => updateStatus(t.next, t.label)}
+                className={`h-14 items-center justify-center rounded-2xl ${destructive ? 'border border-red-200 bg-white active:bg-red-50' : 'bg-brand-500 active:bg-brand-600'}`}
+              >
+                <Text
+                  className={`text-base font-semibold ${destructive ? 'text-red-700' : 'text-white'}`}
+                >
+                  {t.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      )}
     </SafeAreaView>
   );
 }

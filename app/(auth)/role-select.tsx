@@ -12,7 +12,7 @@ export default function RoleSelect() {
           </View>
           <Text className="mt-6 text-4xl font-bold text-brand-700">Sucu</Text>
           <Text className="mt-2 text-center text-base text-slate-500">
-            Mahalleye hızlı su siparişi
+            Kapına kadar su
           </Text>
         </View>
 

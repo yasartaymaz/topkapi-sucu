@@ -36,11 +36,12 @@ export default function Addresses() {
     enabled: !!userId,
     queryFn: async (): Promise<Address[]> => {
       const { data, error } = await supabase
-        .from('customer_addresses_active' as any)
+        .from('customer_addresses')
         .select(
-          'id, label, full_address, is_default, neighborhood_id, neighborhoods_active!inner(name, districts_active!inner(name))'
+          'id, label, full_address, is_default, neighborhood_id, neighborhoods!inner(name, districts!inner(name))'
         )
         .eq('customer_profile_id', userId!)
+        .is('deleted_at', null)
         .order('is_default', { ascending: false })
         .order('created_at', { ascending: false });
       if (error) throw error;
@@ -50,8 +51,8 @@ export default function Addresses() {
         full_address: row.full_address,
         is_default: row.is_default,
         neighborhood_id: row.neighborhood_id,
-        neighborhood_name: row.neighborhoods_active?.name ?? '',
-        district_name: row.neighborhoods_active?.districts_active?.name ?? '',
+        neighborhood_name: (row as any).neighborhoods?.name ?? '',
+        district_name: (row as any).neighborhoods?.districts?.name ?? '',
       }));
     },
   });

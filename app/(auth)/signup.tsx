@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -20,8 +20,9 @@ export default function Signup() {
   const router = useRouter();
   const { refreshProfile } = useAuth();
   const params = useLocalSearchParams<{ role?: string }>();
-  const role = (params.role === 'vendor' ? 'vendor' : 'customer') as Role;
+  const initialRole = (params.role === 'vendor' ? 'vendor' : 'customer') as Role;
 
+  const [role, setRole] = useState<Role>(initialRole);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -45,14 +46,10 @@ export default function Signup() {
     });
     if (signUpError || !signUpData.user) {
       setSubmitting(false);
-      Alert.alert(
-        'Kayıt başarısız',
-        signUpError?.message ?? 'Bilinmeyen bir hata oluştu.'
-      );
+      Alert.alert('Kayıt başarısız', signUpError?.message ?? 'Bilinmeyen bir hata oluştu.');
       return;
     }
 
-    // Profile satırı oluştur
     const { error: profileError } = await supabase.from('profiles').insert({
       id: signUpData.user.id,
       role,
@@ -71,8 +68,6 @@ export default function Signup() {
     router.replace('/');
   };
 
-  const roleLabel = role === 'vendor' ? 'Sucu' : 'Müşteri';
-
   return (
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
@@ -84,8 +79,36 @@ export default function Signup() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="flex-1 px-6 py-8">
-            <Text className="text-2xl font-bold text-brand-700">
-              {roleLabel} kaydı
+
+            {/* Rol toggle */}
+            <View className="flex-row rounded-2xl bg-slate-100 p-1">
+              {(['customer', 'vendor'] as Role[]).map((r) => (
+                <Pressable
+                  key={r}
+                  onPress={() => setRole(r)}
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    paddingVertical: 8,
+                    borderRadius: 12,
+                    backgroundColor: role === r ? '#fff' : 'transparent',
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: '600',
+                      color: role === r ? '#0369A1' : '#64748B',
+                    }}
+                  >
+                    {r === 'customer' ? 'Müşteri' : 'Sucu'}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <Text className="mt-8 text-2xl font-bold text-brand-700">
+              {role === 'vendor' ? 'Sucu' : 'Müşteri'} kaydı
             </Text>
             <Text className="mt-1 text-sm text-slate-500">
               Birkaç bilgi girip hesap oluştur.
@@ -94,7 +117,7 @@ export default function Signup() {
             <View className="mt-8 gap-4">
               <Field
                 label="Ad Soyad"
-                placeholder="Yaşar Taymaz"
+                placeholder="Ad Soyad"
                 value={fullName}
                 onChangeText={setFullName}
               />
@@ -129,11 +152,17 @@ export default function Signup() {
                 {submitting ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text className="text-lg font-semibold text-white">
-                    Kayıt ol
-                  </Text>
+                  <Text className="text-lg font-semibold text-white">Kayıt ol</Text>
                 )}
               </Pressable>
+
+              <Link href={{ pathname: '/(auth)/login', params: { role } }} asChild>
+                <Pressable className="h-14 items-center justify-center rounded-2xl border border-slate-200 bg-white active:bg-slate-50">
+                  <Text className="text-base font-semibold text-slate-700">
+                    Zaten hesabım var, giriş yap
+                  </Text>
+                </Pressable>
+              </Link>
             </View>
           </View>
         </ScrollView>

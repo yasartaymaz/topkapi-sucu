@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BottomNav } from '@/components/BottomNav';
 import { useAuth } from '@/lib/auth';
 import { formatTL, ORDER_STATUS_COLOR, ORDER_STATUS_LABEL } from '@/lib/format';
 import { sendOrderEvent } from '@/lib/orderEvents';
@@ -32,9 +33,10 @@ export default function CustomerOrderDetail() {
     enabled: !!orderId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('orders_active' as any)
-        .select('*, vendors_active!inner(shop_name, phone)')
+        .from('orders')
+        .select('*, vendors!inner(shop_name, phone)')
         .eq('id', orderId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -61,9 +63,10 @@ export default function CustomerOrderDetail() {
     enabled: !!orderId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('reviews_active' as any)
+        .from('reviews')
         .select('id, rating, comment')
         .eq('order_id', orderId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -153,11 +156,11 @@ export default function CustomerOrderDetail() {
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 12 }}>
+      <ScrollView contentContainerStyle={{ padding: 20, gap: 12, paddingBottom: 90 }}>
         <View className="rounded-2xl bg-white p-4">
           <View className="flex-row items-center justify-between">
             <Text className="text-base font-bold text-slate-900">
-              {order.vendors_active?.shop_name}
+              {(order as any).vendors?.shop_name}
             </Text>
             <View className={`rounded-full px-2 py-0.5 ${palette.bg}`}>
               <Text className={`text-xs font-semibold ${palette.text}`}>
@@ -325,6 +328,7 @@ export default function CustomerOrderDetail() {
           </Pressable>
         )}
       </ScrollView>
+      <BottomNav role="customer" active="orders" />
     </SafeAreaView>
   );
 }

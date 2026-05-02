@@ -45,15 +45,15 @@ export function NeighborhoodPicker(props: Props) {
     queryKey: ['neighborhoods-with-district'],
     queryFn: async (): Promise<Option[]> => {
       const { data, error } = await supabase
-        .from('neighborhoods_active' as any)
-        .select('id, name, district_id, districts_active!inner(name)')
+        .from('neighborhoods')
+        .select('id, name, district_id, districts!inner(name)')
         .order('name');
       if (error) throw error;
       return (data ?? []).map((n: any) => ({
         id: n.id,
         name: n.name,
         district_id: n.district_id,
-        district_name: n.districts_active?.name ?? '',
+        district_name: (n as any).districts?.name ?? '',
       }));
     },
     staleTime: 1000 * 60 * 60, // 1 saat cache — lookup verisi değişmez

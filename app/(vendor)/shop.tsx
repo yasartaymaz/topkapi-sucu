@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Stack, useRouter } from 'expo-router';
-import { ChevronLeft } from 'lucide-react-native';
+import { Link, Stack, useRouter } from 'expo-router';
+import { ChevronLeft, MapPin } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -37,9 +37,10 @@ export default function VendorShop() {
     enabled: !!userId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('vendors_active' as any)
+        .from('vendors')
         .select('*')
         .eq('profile_id', userId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -183,6 +184,15 @@ export default function VendorShop() {
           <Text className="text-xs text-slate-500">
             Teslim ücretini 0 bırakırsan ücretsiz teslim olarak gözükür.
           </Text>
+
+          <Link href="/(vendor)/service-areas" asChild>
+            <Pressable className="flex-row items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 active:bg-slate-100">
+              <MapPin size={18} color="#0369A1" />
+              <Text className="flex-1 text-sm font-semibold text-brand-700">
+                Hizmet bölgelerini düzenle
+              </Text>
+            </Pressable>
+          </Link>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

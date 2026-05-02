@@ -13,14 +13,15 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { supabase } from '@/lib/supabase';
 import type { Role } from '@/lib/auth';
+import { supabase } from '@/lib/supabase';
 
 export default function Login() {
   const router = useRouter();
   const params = useLocalSearchParams<{ role?: string }>();
-  const role = (params.role === 'vendor' ? 'vendor' : 'customer') as Role;
+  const initialRole = (params.role === 'vendor' ? 'vendor' : 'customer') as Role;
 
+  const [role, setRole] = useState<Role>(initialRole);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -43,8 +44,6 @@ export default function Login() {
     router.replace('/');
   };
 
-  const roleLabel = role === 'vendor' ? 'Sucu' : 'Müşteri';
-
   return (
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
@@ -56,8 +55,36 @@ export default function Login() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="flex-1 px-6 py-8">
-            <Text className="text-2xl font-bold text-brand-700">
-              {roleLabel} girişi
+
+            {/* Rol toggle */}
+            <View className="flex-row rounded-2xl bg-slate-100 p-1">
+              {(['customer', 'vendor'] as Role[]).map((r) => (
+                <Pressable
+                  key={r}
+                  onPress={() => setRole(r)}
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    paddingVertical: 8,
+                    borderRadius: 12,
+                    backgroundColor: role === r ? '#fff' : 'transparent',
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: '600',
+                      color: role === r ? '#0369A1' : '#64748B',
+                    }}
+                  >
+                    {r === 'customer' ? 'Müşteri' : 'Sucu'}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <Text className="mt-8 text-2xl font-bold text-brand-700">
+              {role === 'vendor' ? 'Sucu' : 'Müşteri'} girişi
             </Text>
             <Text className="mt-1 text-sm text-slate-500">
               Hesabın varsa email ve şifreni gir.
@@ -65,9 +92,7 @@ export default function Login() {
 
             <View className="mt-8 gap-4">
               <View>
-                <Text className="mb-1 text-sm font-medium text-slate-700">
-                  Email
-                </Text>
+                <Text className="mb-1 text-sm font-medium text-slate-700">Email</Text>
                 <TextInput
                   className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-900"
                   placeholder="ornek@mail.com"
@@ -81,9 +106,7 @@ export default function Login() {
               </View>
 
               <View>
-                <Text className="mb-1 text-sm font-medium text-slate-700">
-                  Şifre
-                </Text>
+                <Text className="mb-1 text-sm font-medium text-slate-700">Şifre</Text>
                 <TextInput
                   className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-900"
                   placeholder="••••••"
@@ -102,9 +125,7 @@ export default function Login() {
                 {submitting ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text className="text-lg font-semibold text-white">
-                    Giriş yap
-                  </Text>
+                  <Text className="text-lg font-semibold text-white">Giriş yap</Text>
                 )}
               </Pressable>
 

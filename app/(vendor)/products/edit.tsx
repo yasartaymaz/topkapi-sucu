@@ -43,9 +43,10 @@ export default function ProductEdit() {
     enabled: !!userId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('vendors_active' as any)
+        .from('vendors')
         .select('id')
         .eq('profile_id', userId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -58,9 +59,10 @@ export default function ProductEdit() {
     enabled: isEdit,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('products_active' as any)
+        .from('products')
         .select('*')
         .eq('id', editingId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;

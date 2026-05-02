@@ -7,14 +7,19 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
+  ScrollView,
   Text,
   TextInput,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BottomNav } from '@/components/BottomNav';
 import { useAuth } from '@/lib/auth';
 import { formatTL, formatTime } from '@/lib/format';
 import { sendOrderEvent } from '@/lib/orderEvents';
@@ -55,9 +60,10 @@ export default function VendorDetail() {
     enabled: !!vendorId,
     queryFn: async (): Promise<Vendor | null> => {
       const { data, error } = await supabase
-        .from('vendors_active' as any)
+        .from('vendors')
         .select('id, shop_name, phone, logo_path, delivery_fee, opens_at, closes_at')
         .eq('id', vendorId!)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as Vendor | null;
@@ -69,9 +75,10 @@ export default function VendorDetail() {
     enabled: !!vendorId,
     queryFn: async (): Promise<Product[]> => {
       const { data, error } = await supabase
-        .from('products_active' as any)
+        .from('products')
         .select('id, name, brand, volume_liters, price, image_path, stock_status')
         .eq('vendor_id', vendorId!)
+        .is('deleted_at', null)
         .order('name');
       if (error) throw error;
       return (data ?? []) as Product[];
@@ -83,9 +90,10 @@ export default function VendorDetail() {
     enabled: !!vendorId,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('reviews_active' as any)
+        .from('reviews')
         .select('rating')
-        .eq('vendor_id', vendorId!);
+        .eq('vendor_id', vendorId!)
+        .is('deleted_at', null);
       if (error) throw error;
       const list = (data ?? []) as { rating: number }[];
       if (list.length === 0) return { avg: 0, count: 0 };
@@ -114,7 +122,7 @@ export default function VendorDetail() {
         <FlatList
           data={products}
           keyExtractor={(p) => p.id}
-          contentContainerStyle={{ padding: 20, gap: 10 }}
+          contentContainerStyle={{ padding: 20, gap: 10, paddingBottom: 90 }}
           ListHeaderComponent={
             <View className="mb-4 rounded-2xl bg-white p-5">
               <View className="flex-row items-center">
@@ -227,12 +235,14 @@ export default function VendorDetail() {
         customerName={profile?.full_name ?? null}
         customerPhone={profile?.phone ?? null}
         onClose={() => setOrderProduct(null)}
-        onPlaced={(orderId) => {
+        onPlaced={() => {
           setOrderProduct(null);
           queryClient.invalidateQueries({ queryKey: qk.myCustomerOrders(user?.id ?? null) });
-          router.push({ pathname: '/(customer)/order/[id]', params: { id: orderId } });
+          queryClient.invalidateQueries({ queryKey: ['customer-active-orders', user?.id ?? null] });
+          router.replace('/(customer)');
         }}
       />
+      <BottomNav role="customer" active="home" />
     </SafeAreaView>
   );
 }
@@ -252,7 +262,7 @@ function OrderModal({
   customerName: string | null;
   customerPhone: string | null;
   onClose: () => void;
-  onPlaced: (orderId: string) => void;
+  onPlaced: () => void;
 }) {
   const [qty, setQty] = useState(1);
   const [note, setNote] = useState('');
@@ -263,12 +273,13 @@ function OrderModal({
     enabled: !!customerId && !!product,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('customer_addresses_active' as any)
+        .from('customer_addresses')
         .select(
-          'id, label, full_address, neighborhood_id, neighborhoods_active!inner(name, districts_active!inner(name))'
+          'id, label, full_address, neighborhood_id, neighborhoods!inner(name, districts!inner(name))'
         )
         .eq('customer_profile_id', customerId!)
         .eq('is_default', true)
+        .is('deleted_at', null)
         .maybeSingle();
       if (error) throw error;
       return data as any;
@@ -293,8 +304,8 @@ function OrderModal({
       address_id: defaultAddress.id,
       label: defaultAddress.label,
       neighborhood_id: defaultAddress.neighborhood_id,
-      neighborhood_name: defaultAddress.neighborhoods_active?.name,
-      district_name: defaultAddress.neighborhoods_active?.districts_active?.name,
+      neighborhood_name: (defaultAddress as any).neighborhoods?.name,
+      district_name: (defaultAddress as any).neighborhoods?.districts?.name,
       full_address: defaultAddress.full_address,
     };
 
@@ -338,7 +349,7 @@ function OrderModal({
     setSubmitting(false);
     setQty(1);
     setNote('');
-    onPlaced(data.id);
+    onPlaced();
   };
 
   if (!product || !vendor) return null;
@@ -360,7 +371,15 @@ function OrderModal({
           </Pressable>
         </View>
 
-        <View className="flex-1 px-5 py-5">
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <ScrollView
+            contentContainerStyle={{ padding: 20, gap: 12 }}
+            keyboardShouldPersistTaps="handled"
+            onScrollBeginDrag={Keyboard.dismiss}
+          >
           <View className="rounded-2xl bg-slate-50 p-4">
             <Text className="text-xs font-semibold uppercase text-slate-500">
               Ürün
@@ -406,8 +425,8 @@ function OrderModal({
               <>
                 <Text className="mt-1 text-sm font-semibold text-slate-900">
                   {defaultAddress.label} —{' '}
-                  {defaultAddress.neighborhoods_active?.name} /{' '}
-                  {defaultAddress.neighborhoods_active?.districts_active?.name}
+                  {(defaultAddress as any).neighborhoods?.name} /{' '}
+                  {(defaultAddress as any).neighborhoods?.districts?.name}
                 </Text>
                 <Text className="text-xs text-slate-600" numberOfLines={2}>
                   {defaultAddress.full_address}
@@ -435,24 +454,26 @@ function OrderModal({
             />
           </View>
 
-          <View className="mt-auto rounded-2xl bg-slate-50 p-4">
+          <View className="rounded-2xl bg-slate-50 p-4">
             <Row label="Ara toplam" value={formatTL(subtotal)} />
             <Row label="Teslim ücreti" value={deliveryFee > 0 ? formatTL(deliveryFee) : 'Ücretsiz'} />
             <View className="my-2 h-px bg-slate-200" />
             <Row label="Toplam" value={formatTL(total)} bold />
           </View>
 
+          </ScrollView>
+        </KeyboardAvoidingView>
+
+        <View className="border-t border-slate-100 bg-white px-5 py-4">
           <Pressable
             onPress={placeOrder}
             disabled={submitting || !defaultAddress}
-            className="mt-4 h-14 items-center justify-center rounded-2xl bg-brand-500 active:bg-brand-600 disabled:opacity-50"
+            className="h-14 items-center justify-center rounded-2xl bg-brand-500 active:bg-brand-600 disabled:opacity-50"
           >
             {submitting ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text className="text-lg font-semibold text-white">
-                Siparişi ver
-              </Text>
+              <Text className="text-lg font-semibold text-white">Siparişi ver</Text>
             )}
           </Pressable>
         </View>
