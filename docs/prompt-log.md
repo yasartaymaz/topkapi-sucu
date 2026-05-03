@@ -915,3 +915,83 @@ yarin son kez test edecegim appi. su anda commit push yapar misin
 
 ---
 
+## 2026-05-03 15:41:51Z
+
+open this folder in terminal
+
+---
+
+## 2026-05-03 15:52:47Z
+
+bugs dosyasi vardi acar misin onu notepad++ da
+
+---
+
+## 2026-05-03 16:05:14Z
+
+2 tane user var dbde. onlari siler misin, onlara ait kayitlari da
+
+---
+
+## 2026-05-03 16:05:46Z
+
+evet
+
+---
+
+## 2026-05-03 16:13:03Z
+
+yeni bir kayit oldum vendor olarak ama beyaz bir ekranda kaldi ve spinner var. anasayfaya yonlendmedi
+
+---
+
+## 2026-05-03 16:21:03Z
+
+dukkan eklerken ornekte yasar su yaziyor, onu degistirelim
+
+---
+
+## 2026-05-03 16:22:08Z
+
+guzel. vendor kayit olunca once ana ekrana gelsin. orada dukkani yoksa dukkan kur butonu olsun. su anda vendor kayit olunca dukkan kurmaya baslamaktan baska bir secenegi gozukmuyor
+
+---
+
+## 2026-05-03 16:41:13Z
+
+surekli neden bozuyorsun bir yerleri?
+
+musteri olarak kayit oldum, rol secme ekranina dondu
+
+---
+
+## 2026-05-03 16:43:53Z
+
+eklenen 2 tane user var, onlari ve datalarini siler misin
+
+---
+
+## 2026-05-03 16:48:55Z
+
+bir dukkan olusturdum. onu siler misin?
+
+---
+
+## 2026-05-03 16:51:44Z
+
+sucu panelinde hizmet bolgem, urunlerim, tum siparisler butonlarini kaldir
+
+---
+
+## 2026-05-03 16:52:59Z
+
+anasayfada tepede hesap adi yaziyor di mi? diger ekranlarda hos geldin yazmiyor. ana sayfada da hos geldin yazmasin.
+
+---
+
+## 2026-05-03 16:54:37Z
+
+bir git yollayalim
+
+---
+

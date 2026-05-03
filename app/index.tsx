@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth';
 export default function Index() {
   const { session, profile, loading } = useAuth();
 
-  if (loading || (session && !profile)) {
+  if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
         <ActivityIndicator size="large" color="#0EA5E9" />

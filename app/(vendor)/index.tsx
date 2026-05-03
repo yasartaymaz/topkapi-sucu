@@ -71,20 +71,31 @@ export default function VendorHome() {
   if (!vendor) {
     return (
       <SafeAreaView className="flex-1 bg-slate-50" edges={['top']}>
-        <View className="flex-1 items-center justify-center px-6">
-          <View className="h-20 w-20 items-center justify-center rounded-full bg-brand-100">
-            <Store size={36} color="#0369A1" />
-          </View>
-          <Text className="mt-4 text-2xl font-bold text-slate-900">Dükkanını kur</Text>
-          <Text className="mt-2 text-center text-base text-slate-600">
-            Müşterilerin seni bulabilmesi için dükkan bilgilerini gir.
+        {/* Header */}
+        <View className="bg-white px-5 py-4">
+          <Text className="text-xl font-bold text-slate-900" numberOfLines={1}>
+            Sucu paneli
           </Text>
-          <Link href="/(vendor)/shop" asChild>
-            <Pressable className="mt-6 h-14 items-center justify-center rounded-2xl bg-brand-500 px-8 active:bg-brand-600">
-              <Text className="text-lg font-semibold text-white">Başla</Text>
-            </Pressable>
-          </Link>
         </View>
+
+        <View className="flex-1 px-5 py-6">
+          <View className="rounded-2xl bg-white p-5">
+            <View className="h-14 w-14 items-center justify-center rounded-full bg-brand-100">
+              <Store size={28} color="#0369A1" />
+            </View>
+            <Text className="mt-3 text-xl font-bold text-slate-900">Dükkanını kur</Text>
+            <Text className="mt-1 text-sm text-slate-600">
+              Müşterilerin seni bulabilmesi için dükkan bilgilerini gir. Birkaç dakika sürer.
+            </Text>
+            <Link href="/(vendor)/shop" asChild>
+              <Pressable className="mt-4 h-12 items-center justify-center rounded-xl bg-brand-500 active:bg-brand-600">
+                <Text className="text-base font-semibold text-white">Dükkan kur</Text>
+              </Pressable>
+            </Link>
+          </View>
+        </View>
+
+        <BottomNav role="vendor" active="home" />
       </SafeAreaView>
     );
   }
@@ -95,8 +106,7 @@ export default function VendorHome() {
     <SafeAreaView className="flex-1 bg-slate-50" edges={['top']}>
       {/* Header */}
       <View className="bg-white px-5 py-4">
-        <Text className="text-xs text-slate-500">Hoş geldin</Text>
-        <Text className="text-lg font-bold text-slate-900" numberOfLines={1}>
+        <Text className="text-xl font-bold text-slate-900" numberOfLines={1}>
           {vendor.shop_name}
         </Text>
       </View>

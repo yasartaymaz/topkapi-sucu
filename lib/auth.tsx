@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -34,8 +35,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  // Birden fazla loadProfile çağrısı çakışırsa en son başlayan kazansın
+  const fetchTokenRef = useRef(0);
 
   const loadProfile = async (userId: string | null) => {
+    const myToken = ++fetchTokenRef.current;
     if (!userId) {
       setProfile(null);
       return;
@@ -46,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq('id', userId)
       .is('deleted_at', null)
       .maybeSingle();
+    if (myToken !== fetchTokenRef.current) return;
     if (error) {
       // Tablo henüz yoksa veya okuma izni yoksa sessiz geç — kullanıcı role-select'e yönlenir
       setProfile(null);
@@ -84,7 +89,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     profile,
     loading,
     refreshProfile: async () => {
-      await loadProfile(session?.user.id ?? null);
+      // session state stale olabilir (signup'tan hemen sonra closure güncellenmemiş olabilir).
+      // Her seferinde supabase'den taze user id'sini al.
+      const { data } = await supabase.auth.getSession();
+      await loadProfile(data.session?.user.id ?? null);
     },
     signOut: async () => {
       await supabase.auth.signOut();

@@ -1,5 +1,5 @@
 import { Link, Stack, useRouter } from 'expo-router';
-import { LogOut, MapPin, Package, Settings, ShoppingBag } from 'lucide-react-native';
+import { LogOut, Settings } from 'lucide-react-native';
 import { Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -44,39 +44,6 @@ export default function VendorProfile() {
             </View>
             <Text className="ml-3 flex-1 text-base font-semibold text-slate-900">
               Dükkan ayarları
-            </Text>
-          </Pressable>
-        </Link>
-
-        <Link href="/(vendor)/service-areas" asChild>
-          <Pressable className="flex-row items-center rounded-2xl bg-white p-4 active:bg-slate-50">
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-100">
-              <MapPin size={18} color="#0369A1" />
-            </View>
-            <Text className="ml-3 flex-1 text-base font-semibold text-slate-900">
-              Hizmet bölgem
-            </Text>
-          </Pressable>
-        </Link>
-
-        <Link href="/(vendor)/products" asChild>
-          <Pressable className="flex-row items-center rounded-2xl bg-white p-4 active:bg-slate-50">
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-100">
-              <Package size={18} color="#0369A1" />
-            </View>
-            <Text className="ml-3 flex-1 text-base font-semibold text-slate-900">
-              Ürünlerim
-            </Text>
-          </Pressable>
-        </Link>
-
-        <Link href="/(vendor)/orders" asChild>
-          <Pressable className="flex-row items-center rounded-2xl bg-white p-4 active:bg-slate-50">
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-100">
-              <ShoppingBag size={18} color="#0369A1" />
-            </View>
-            <Text className="ml-3 flex-1 text-base font-semibold text-slate-900">
-              Tüm siparişler
             </Text>
           </Pressable>
         </Link>

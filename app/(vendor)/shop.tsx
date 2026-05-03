@@ -142,7 +142,7 @@ export default function VendorShop() {
         <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }}>
           <Field
             label="Dükkan adı"
-            placeholder="Örn: Yaşar Su"
+            placeholder="Örn: Topkapı Su"
             value={shopName}
             onChangeText={setShopName}
           />
