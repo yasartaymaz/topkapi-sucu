@@ -38,7 +38,7 @@ burada mi
 
 ## 2026-04-22 15:02:55Z
 
-sbp_d47a327c0d37e741700e0eae5e7b62baa813feda
+[REDACTED — Supabase access token revoke edildi]
 
 ---
 
@@ -1198,6 +1198,146 @@ gitte bekleyen diger dosyalar neler
 ## 2026-05-04 21:43:41Z
 
 commitle pushla
+
+---
+
+## 2026-05-04 21:44:13Z
+
+bu idleri nasil elde edebilirim?
+
+---
+
+## 2026-05-04 21:45:10Z
+
+team id: 66347KW5VM
+
+---
+
+## 2026-05-04 21:45:45Z
+
+bu da app id sanirim 6765835548
+
+---
+
+## 2026-05-04 21:46:23Z
+
+terminal acar misin
+
+---
+
+## 2026-05-04 22:11:41Z
+
+The dimensions of one or more screenshots are wrong. Learn More
+
+Screenshots dimensions should be: 1242 × 2688px, 2688 × 1242px, 1284 × 2778px or 2778 × 1284px
+
+
+diyor fotograflara. fotograflarim burada: C:\Users\captain\Desktop\sucuapp-ss-ios\orig
+
+---
+
+## 2026-05-04 22:13:03Z
+
+ne gireyim buralara?
+
+---
+
+## 2026-05-04 22:13:59Z
+
+topkapi detaylarini cikartir misin
+
+---
+
+## 2026-05-04 22:15:02Z
+
+burada ikonsuz gozukuyor.
+
+---
+
+## 2026-05-04 22:16:04Z
+
+buildi gonderdim
+
+---
+
+## 2026-05-04 22:16:18Z
+
+ok rereshledim geldi
+
+---
+
+## 2026-05-04 22:17:42Z
+
+aquarist uygulamam icin github pages'e aquarist-mobile-static-content soyle bisiler yapmistik
+
+https://github.com/yasartaymaz/aquarist-mobile-static-content burada bariniyor. boyle bir sey hazirlar misin sucuapp icin de
+
+---
+
+## 2026-05-04 22:19:34Z
+
+ok sen hallet o zaman her seyi, bekliyorum
+
+---
+
+## 2026-05-04 22:30:28Z
+
+copyright bos gecilmemesi lazimmis
+
+---
+
+## 2026-05-04 22:31:22Z
+
+You must select a primary category for your app.
+
+---
+
+## 2026-05-04 22:31:36Z
+
+hangi menuden yapabilirim?
+
+---
+
+## 2026-05-04 22:32:14Z
+
+Before you can submit this app for review, an Admin must provide information about the app’s privacy practices in the App Privacy section. Learn More
+
+---
+
+## 2026-05-04 22:32:46Z
+
+nerden
+
+---
+
+## 2026-05-04 22:35:06Z
+
+tesekkurler
+
+---
+
+## 2026-05-04 22:38:04Z
+
+readme yi okur musun. orada sacma bisiler veya su an farkli olan bir sey var mi? sanirim orasi ilk projeyi yaptigimiz zaman yazildi. ama onun ustune cok sey yaptik degistirdik. bir inceler misin?
+
+---
+
+## 2026-05-04 22:40:20Z
+
+1,2,3 yap, 4 icin musteri@sucu.com ve sucu@sucu.com ekleyebilirsin
+5 ve 6yi sana birakiyorum
+
+---
+
+## 2026-05-04 22:43:40Z
+
+o deneme maillerinin sifrelerini kaldirir misin?
+
+---
+
+## 2026-05-04 22:44:29Z
+
+prompt history var ya, orada supabase db sifreleri gordum. ne yapabiliriz onun icin?
 
 ---
 
