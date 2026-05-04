@@ -1,6 +1,6 @@
 # Sucu — Mahalle Bazlı Su Sipariş Platformu
 
-> 📱 **App Store:** _yayın süreci devam ediyor_ · 🧪 **TestFlight:** build alındıktan sonra davet linki eklenecek
+> 📱 **App Store:** _review aşamasında_ · 🧪 **TestFlight:** build yüklendi, davet linki yakında eklenecek
 
 ## İçindekiler
 
@@ -29,8 +29,8 @@ npx expo start
 
 App Store submission hazır olduğunda hocaya iletilecek olan hazır test hesapları:
 
-- Müşteri: `customer@sucu.app` / `sucutest`
-- Sucu: `vendor@sucu.app` / `sucutest`
+- Müşteri: `musteri@sucu.com` / `sucutest`
+- Sucu: `sucu@sucu.com` / `sucutest`
 
 ---
 
@@ -76,7 +76,9 @@ app/                       # Expo Router ekranları
     order/[id].tsx         # Sipariş detay + status güncelleme
     profile.tsx
 components/
+  BottomNav.tsx            # Müşteri/sucu için alt navigasyon barı
   NeighborhoodPicker.tsx   # İstanbul mahallesi için arama+seç component'i
+  OrderList.tsx            # Müşteri ve sucu ekranlarında ortak sipariş listesi
 lib/
   supabase.ts              # Supabase client (AsyncStorage persistence)
   auth.tsx                 # AuthProvider + useAuth
@@ -94,8 +96,9 @@ scripts/
 docs/
   plan.md                  # Proje planı ve kararlar
   prompt-log.md            # Claude Code'a gönderilen promptların otomatik logu
-supabase/                  # Edge Function'lar Supabase üzerinde deploy edilmiş
 ```
+
+> Edge Function'lar Supabase üzerinde canlı (push notification gönderimi). Kaynak kodu bu repo'da tutulmuyor.
 
 ## Veri modeli
 
@@ -258,17 +261,3 @@ N --> O[Teslim edildi]
 O --> P[Sipariş geçmişine eklenir]
 ```
 
-## Kullanılacak Yapay Zekâ Araçları
-
-Projenin geliştirme sürecinde çeşitli yapay zekâ araçları
-kullanılacaktır:
-
--   **ChatGPT / Claude:** proje konsepti, kullanıcı yolculuğu ve teknik
-    tasarım üretimi
--   **AI tabanlı UI araçları (ör. v0, Midjourney vb.):** uygulama
-    ekranlarının tasarlanması
--   **AI kod üretim araçları:** prototip uygulama geliştirme sürecinde
-    destek
-
-Bu araçlar fikir geliştirme, tasarım ve prototipleme aşamalarında üretim
-ortağı olarak kullanılacaktır.
