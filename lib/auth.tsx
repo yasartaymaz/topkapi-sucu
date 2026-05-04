@@ -44,41 +44,68 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setProfile(null);
       return;
     }
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('id, role, full_name, phone, expo_push_token')
-      .eq('id', userId)
-      .is('deleted_at', null)
-      .maybeSingle();
-    if (myToken !== fetchTokenRef.current) return;
-    if (error) {
-      // Tablo henüz yoksa veya okuma izni yoksa sessiz geç — kullanıcı role-select'e yönlenir
-      setProfile(null);
-      return;
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id, role, full_name, phone, expo_push_token')
+        .eq('id', userId)
+        .is('deleted_at', null)
+        .maybeSingle();
+      if (myToken !== fetchTokenRef.current) return;
+      if (error) {
+        setProfile(null);
+        return;
+      }
+      setProfile((data as Profile | null) ?? null);
+    } catch {
+      // Ağ hatası / bozuk session: profili temizle, app role-select'e yönlenir
+      if (myToken === fetchTokenRef.current) setProfile(null);
     }
-    setProfile((data as Profile | null) ?? null);
   };
 
   useEffect(() => {
     let active = true;
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (!active) return;
-      setSession(data.session);
-      await loadProfile(data.session?.user.id ?? null);
-      setLoading(false);
-      if (data.session?.user.id) {
-        registerForPushAsync(data.session.user.id).catch(() => {});
+
+    // Watchdog: ağ tamamen ölü olsa bile 8sn sonra spinner'dan çık,
+    // kullanıcı role-select'e düşsün, sonsuz beyaz ekran olmasın.
+    const watchdog = setTimeout(() => {
+      if (active) setLoading(false);
+    }, 8000);
+
+    (async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (!active) return;
+        setSession(data.session);
+        await loadProfile(data.session?.user.id ?? null);
+        if (data.session?.user.id) {
+          registerForPushAsync(data.session.user.id).catch(() => {});
+        }
+      } catch {
+        // getSession reject ederse (AsyncStorage bozuksa vs.) sessiz geç
+      } finally {
+        if (active) {
+          clearTimeout(watchdog);
+          setLoading(false);
+        }
       }
-    });
+    })();
+
     const { data: sub } = supabase.auth.onAuthStateChange(async (_event, s) => {
       setSession(s);
-      await loadProfile(s?.user.id ?? null);
+      try {
+        await loadProfile(s?.user.id ?? null);
+      } catch {
+        setProfile(null);
+      }
       if (s?.user.id) {
         registerForPushAsync(s.user.id).catch(() => {});
       }
     });
+
     return () => {
       active = false;
+      clearTimeout(watchdog);
       sub.subscription.unsubscribe();
     };
   }, []);
