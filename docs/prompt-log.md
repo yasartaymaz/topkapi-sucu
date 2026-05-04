@@ -995,3 +995,209 @@ bir git yollayalim
 
 ---
 
+## 2026-05-03 16:55:06Z
+
+evet
+
+---
+
+## 2026-05-03 16:58:27Z
+
+su anda anasayfada hic bir sey yazmiyor yukarda
+
+---
+
+## 2026-05-03 17:07:33Z
+
+musteri hesabina gectim, anasayfada headerda hos geldin sucular yaziyor. bunu degistirelim. musterinin adi yazsin
+
+---
+
+## 2026-05-03 17:08:14Z
+
+ya da appin ismi yazsin, / musteri ismi yazsin? veya onerebilecegin bir sey var mi?
+
+---
+
+## 2026-05-03 17:10:49Z
+
+app adi / musteri adi olsun ana ekran icin
+
+---
+
+## 2026-05-03 17:48:27Z
+
+bir de app iconlar tasarlattim. nereye koyayim onlari?
+
+---
+
+## 2026-05-03 18:01:48Z
+
+bu klasorde duruyor dosyalar. sen iclerinden ios icin gerekli olanlari secip ekler misin lutfen
+
+"C:\Users\captain\Desktop\Sucu-AppIcon.appiconset\AppIcon.appiconset"
+
+---
+
+## 2026-05-03 18:02:36Z
+
+alpha kanali ne demek?
+
+---
+
+## 2026-05-03 18:10:37Z
+
+appte nerelere koydun ikonu
+
+---
+
+## 2026-05-03 18:11:10Z
+
+splash-icon.png da degistir
+
+---
+
+## 2026-05-03 18:12:40Z
+
+rol secme ekrani boyle bi kalacak
+
+---
+
+## 2026-05-03 18:13:00Z
+
+rol secme ekraninda baska bir ikon var sanki
+
+---
+
+## 2026-05-03 18:13:28Z
+
+evet tabiki
+
+---
+
+## 2026-05-03 18:19:08Z
+
+musteri ekraninda anasayfada vendor listesinde listitemin saginda bir ikon var onu belirgin sekilde sag ok gibi bir seyler yapabilir misin
+
+---
+
+## 2026-05-03 18:30:30Z
+
+ayni anda iki telefonda birden test etmek istiyorum. mesela esimin telefonunda da kurup test etmek istiyorum. nasil yapabilirim?
+
+---
+
+## 2026-05-03 18:36:19Z
+
+musteri ekranindaki siparis listesinde ustte bir border mi var? sucuya gectim ama onda yok sanirim? bir kontrol eder misin
+
+---
+
+## 2026-05-03 18:39:06Z
+
+musteride devam eden siparislerde gozukuyor sadece. app genelinde tum siparis listelemelerinde bunu yapsak ya? hatta borderi border-top degil de hem top hem bottom sekline yapsak?
+
+---
+
+## 2026-05-03 18:40:02Z
+
+borderlari komple yapar misin?
+
+---
+
+## 2026-05-03 18:41:17Z
+
+yeni siparislerde siyah deildi ama su anda siyah gozukuyor, hata mi yaptin acaba?
+
+---
+
+## 2026-05-03 18:46:00Z
+
+sucu listesindeki okun rengini ayni satirda soldaki ikonun arka plan rengi gibi yapar misin
+
+---
+
+## 2026-05-03 18:48:09Z
+
+ok harika
+
+---
+
+## 2026-05-03 18:50:29Z
+
+siparis teslim edildi olarak isaretleyince musteride onaylama formu cikti. yildizi verdim, inouta tikladim ama klavyenin arkasinda gozukuyor textarea. yazdigimi goremiyorum. bekle remotecontrol yapip gorsel atacagim
+
+---
+
+## 2026-05-03 19:17:02Z
+
+olmadi. boyle sacma gorunumler olustu
+
+---
+
+## 2026-05-03 19:20:13Z
+
+siparis vermek icin sucunun sayfasina girdigimde sucunun adinin altinda puani var. ve degerlendirme sayisi yaziyor. 
+
+yorumlari da gorebilmemizin imkani var mi?
+
+---
+
+## 2026-05-03 19:22:02Z
+
+gerek yok
+
+---
+
+## 2026-05-04 20:07:19Z
+
+appi artik app storea yuklemek istiyorum. yardimci olur musun
+
+---
+
+## 2026-05-04 20:09:59Z
+
+projeyi clida acar misin
+
+---
+
+## 2026-05-04 20:19:08Z
+
+repo public bunu unutma yine de girmeli miyiz bu bilgileri?
+
+---
+
+## 2026-05-04 20:21:05Z
+
+ondan once bil bug bildirecegim. appi actim expo start ile,. ama beyaz ekranda spinner var. 
+
+hoca dun derste dedi ki, "appi acinca en ufak bir hatada sinifta kalirsiniz". lutfen bu appi sorunsuz hale getirelim.
+
+kodlari duzgunce inceler misin, bunun sebebi ne olabilir?
+
+---
+
+## 2026-05-04 20:38:13Z
+
+denedim sorunsuz
+
+---
+
+## 2026-05-04 21:24:38Z
+
+commitle
+
+---
+
+## 2026-05-04 21:42:58Z
+
+gitte bekleyen diger dosyalar neler
+
+---
+
+## 2026-05-04 21:43:41Z
+
+commitle pushla
+
+---
+
