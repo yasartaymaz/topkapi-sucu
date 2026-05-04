@@ -29,8 +29,10 @@ npx expo start
 
 App Store submission hazır olduğunda hocaya iletilecek olan hazır test hesapları:
 
-- Müşteri: `musteri@sucu.com` / `sucutest`
-- Sucu: `sucu@sucu.com` / `sucutest`
+- Müşteri: `musteri@sucu.com`
+- Sucu: `sucu@sucu.com`
+
+Şifreler hocaya App Store Connect üzerinden iletilecek (Demo Account bilgileri).
 
 ---
 
