@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useRouter } from 'expo-router';
-import { ChevronRight, Droplets, MapPin, Pencil, Plus, Store } from 'lucide-react-native';
+import { ChevronRight, MapPin, Pencil, Plus, Store } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
@@ -53,7 +53,7 @@ const ACTIVE_STATUSES = ['pending', 'accepted', 'preparing', 'delivering'];
 export default function CustomerHome() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const userId = user?.id ?? null;
 
   // Tüm adresler
@@ -152,9 +152,13 @@ export default function CustomerHome() {
 
   return (
     <SafeAreaView className="flex-1 bg-slate-50" edges={['top']}>
-      <View className="px-5 pb-3 pt-2">
-        <Text className="text-xs text-slate-500">Hoş geldin</Text>
-        <Text className="text-xl font-bold text-slate-900">Sucular</Text>
+      <View className="bg-white px-5 py-4">
+        <Text className="text-xs font-semibold uppercase tracking-wide text-brand-700">
+          Topkapı Sucu
+        </Text>
+        <Text className="mt-0.5 text-xl font-bold text-slate-900" numberOfLines={1}>
+          {profile?.full_name ?? 'Hesabım'}
+        </Text>
       </View>
 
       {/* Adres kartı */}
@@ -217,33 +221,29 @@ export default function CustomerHome() {
                     href={{ pathname: '/(customer)/order/[id]', params: { id: order.id } }}
                     asChild
                   >
-                    <Pressable className="overflow-hidden rounded-2xl bg-white active:bg-slate-50">
-                      {/* Renkli üst şerit */}
-                      <View className={`h-1 w-full ${palette.bg}`} />
-                      <View className="p-4">
-                        <View className="flex-row items-center justify-between">
-                          <Text className="text-base font-bold text-slate-900" numberOfLines={1}>
-                            {order.vendor_shop_name}
-                          </Text>
-                          <View className={`rounded-full px-2 py-0.5 ${palette.bg}`}>
-                            <Text className={`text-[11px] font-semibold ${palette.text}`}>
-                              {ORDER_STATUS_LABEL[order.status]}
-                            </Text>
-                          </View>
-                        </View>
-                        <Text className="mt-1 text-sm text-slate-600">
-                          {order.product_name_snapshot} × {order.qty}
+                    <Pressable className={`rounded-2xl border-2 bg-white p-4 active:bg-slate-50 ${palette.border}`}>
+                      <View className="flex-row items-center justify-between">
+                        <Text className="text-base font-bold text-slate-900" numberOfLines={1}>
+                          {order.vendor_shop_name}
                         </Text>
-                        <View className="mt-2 flex-row items-center justify-between">
-                          <Text className="text-sm font-bold text-slate-900">
-                            {formatTL(order.total)}
+                        <View className={`rounded-full px-2 py-0.5 ${palette.bg}`}>
+                          <Text className={`text-[11px] font-semibold ${palette.text}`}>
+                            {ORDER_STATUS_LABEL[order.status]}
                           </Text>
-                          <View className="flex-row items-center gap-1">
-                            <Text className="text-xs text-brand-700 font-semibold">
-                              Detay
-                            </Text>
-                            <ChevronRight size={14} color="#0369A1" />
-                          </View>
+                        </View>
+                      </View>
+                      <Text className="mt-1 text-sm text-slate-600">
+                        {order.product_name_snapshot} × {order.qty}
+                      </Text>
+                      <View className="mt-2 flex-row items-center justify-between">
+                        <Text className="text-sm font-bold text-slate-900">
+                          {formatTL(order.total)}
+                        </Text>
+                        <View className="flex-row items-center gap-1">
+                          <Text className="text-xs text-brand-700 font-semibold">
+                            Detay
+                          </Text>
+                          <ChevronRight size={14} color="#0369A1" />
                         </View>
                       </View>
                     </Pressable>
@@ -301,8 +301,8 @@ export default function CustomerHome() {
                     : 'Ücretsiz teslim'}
                 </Text>
               </View>
-              <View className="h-9 w-9 items-center justify-center rounded-full bg-sky-100">
-                <Droplets size={18} color="#38BDF8" />
+              <View className="h-9 w-9 items-center justify-center rounded-full bg-brand-100">
+                <ChevronRight size={22} color="#0369A1" />
               </View>
             </Pressable>
           </Link>

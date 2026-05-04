@@ -20,6 +20,8 @@ export const qk = {
     ['vendor-products', vendorId] as const,
   vendorReviewSummary: (vendorId: string | null) =>
     ['vendor-review-summary', vendorId] as const,
+  vendorReviews: (vendorId: string | null) =>
+    ['vendor-reviews', vendorId] as const,
 
   myCustomerOrders: (userId: string | null) => ['my-customer-orders', userId] as const,
   myVendorOrders: (vendorId: string | null) => ['my-vendor-orders', vendorId] as const,

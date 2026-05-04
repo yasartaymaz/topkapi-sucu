@@ -54,6 +54,7 @@ export default function VendorDetail() {
   const vendorId = id ?? null;
 
   const [orderProduct, setOrderProduct] = useState<Product | null>(null);
+  const [reviewsOpen, setReviewsOpen] = useState(false);
 
   const { data: vendor, isLoading } = useQuery({
     queryKey: qk.vendor(vendorId),
@@ -134,15 +135,18 @@ export default function VendorDetail() {
                     {vendor.shop_name}
                   </Text>
                   {rating && rating.count > 0 ? (
-                    <View className="mt-1 flex-row items-center">
+                    <Pressable
+                      onPress={() => setReviewsOpen(true)}
+                      className="mt-1 flex-row items-center active:opacity-60"
+                    >
                       <Star size={14} color="#F59E0B" fill="#F59E0B" />
                       <Text className="ml-1 text-sm font-semibold text-slate-700">
                         {rating.avg.toFixed(1)}
                       </Text>
-                      <Text className="ml-1 text-xs text-slate-500">
+                      <Text className="ml-1 text-xs text-brand-700 underline">
                         ({rating.count} değerlendirme)
                       </Text>
-                    </View>
+                    </Pressable>
                   ) : (
                     <Text className="mt-1 text-xs text-slate-500">
                       Henüz değerlendirme yok
@@ -227,6 +231,13 @@ export default function VendorDetail() {
           }}
         />
       )}
+
+      <ReviewsModal
+        visible={reviewsOpen}
+        vendorId={vendorId}
+        vendorName={vendor?.shop_name ?? ''}
+        onClose={() => setReviewsOpen(false)}
+      />
 
       <OrderModal
         product={orderProduct}
@@ -477,6 +488,93 @@ function OrderModal({
             )}
           </Pressable>
         </View>
+      </SafeAreaView>
+    </Modal>
+  );
+}
+
+function ReviewsModal({
+  visible,
+  vendorId,
+  vendorName,
+  onClose,
+}: {
+  visible: boolean;
+  vendorId: string | null;
+  vendorName: string;
+  onClose: () => void;
+}) {
+  const { data: reviews = [], isLoading } = useQuery({
+    queryKey: qk.vendorReviews(vendorId),
+    enabled: visible && !!vendorId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('id, rating, comment, created_at')
+        .eq('vendor_id', vendorId!)
+        .is('deleted_at', null)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return (data ?? []) as { id: string; rating: number; comment: string | null; created_at: string }[];
+    },
+  });
+
+  return (
+    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+      <SafeAreaView className="flex-1 bg-white" edges={['top', 'bottom']}>
+        <View className="flex-row items-center border-b border-slate-100 px-4 py-3">
+          <Text className="flex-1 text-lg font-bold text-slate-900" numberOfLines={1}>
+            {vendorName} değerlendirmeleri
+          </Text>
+          <Pressable onPress={onClose} className="px-2 py-1">
+            <Text className="text-base text-slate-600">Kapat</Text>
+          </Pressable>
+        </View>
+
+        {isLoading ? (
+          <View className="flex-1 items-center justify-center">
+            <ActivityIndicator size="large" color="#0EA5E9" />
+          </View>
+        ) : reviews.length === 0 ? (
+          <View className="flex-1 items-center justify-center px-6">
+            <Star size={28} color="#94A3B8" />
+            <Text className="mt-2 text-base font-semibold text-slate-900">
+              Henüz değerlendirme yok
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            data={reviews}
+            keyExtractor={(r) => r.id}
+            contentContainerStyle={{ padding: 20, gap: 12 }}
+            renderItem={({ item }) => (
+              <View className="rounded-2xl border border-slate-100 bg-white p-4">
+                <View className="flex-row items-center justify-between">
+                  <View className="flex-row">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        color={i < item.rating ? '#F59E0B' : '#E2E8F0'}
+                        fill={i < item.rating ? '#F59E0B' : '#E2E8F0'}
+                      />
+                    ))}
+                  </View>
+                  <Text className="text-xs text-slate-500">
+                    {new Date(item.created_at).toLocaleDateString('tr-TR', {
+                      day: '2-digit', month: '2-digit', year: 'numeric',
+                    })}
+                  </Text>
+                </View>
+                {item.comment ? (
+                  <Text className="mt-2 text-sm text-slate-800">{item.comment}</Text>
+                ) : (
+                  <Text className="mt-2 text-sm italic text-slate-400">Yorum yok</Text>
+                )}
+              </View>
+            )}
+          />
+        )}
       </SafeAreaView>
     </Modal>
   );
