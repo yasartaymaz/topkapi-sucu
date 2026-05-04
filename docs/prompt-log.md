@@ -12,7 +12,7 @@ enable rls napim?
 
 ## 2026-04-22 15:00:09Z
 
-db pass: rbh6WQqAnXdyC6Mx
+db pass: [REDACTED — DB password rotate edildi]
 project url: https://gxsijuarbfntpyvkzubk.supabase.co
 baska ne lazim?
 
@@ -1338,6 +1338,18 @@ o deneme maillerinin sifrelerini kaldirir misin?
 ## 2026-05-04 22:44:29Z
 
 prompt history var ya, orada supabase db sifreleri gordum. ne yapabiliriz onun icin?
+
+---
+
+## 2026-05-04 22:46:17Z
+
+mcp-claude diye bir token var, bunu mu sileyim?
+
+---
+
+## 2026-05-04 22:47:05Z
+
+projede herhangi baska bir secret var mi sorun cikartacak?
 
 ---
 
