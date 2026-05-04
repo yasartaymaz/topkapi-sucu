@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { Pressable, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RoleSelect() {
@@ -7,9 +7,11 @@ export default function RoleSelect() {
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 justify-between px-6 py-10">
         <View className="items-center pt-16">
-          <View className="h-24 w-24 items-center justify-center rounded-full bg-brand-100">
-            <Text className="text-5xl">💧</Text>
-          </View>
+          <Image
+            source={require('@/assets/images/icon.png')}
+            style={{ width: 96, height: 96, borderRadius: 22 }}
+            resizeMode="cover"
+          />
           <Text className="mt-6 text-4xl font-bold text-brand-700">Sucu</Text>
           <Text className="mt-2 text-center text-base text-slate-500">
             Kapına kadar su

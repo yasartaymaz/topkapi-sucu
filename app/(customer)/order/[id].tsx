@@ -156,7 +156,11 @@ export default function CustomerOrderDetail() {
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 12, paddingBottom: 90 }}>
+      <ScrollView
+        contentContainerStyle={{ padding: 20, gap: 12, paddingBottom: 90 }}
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
+      >
         <View className="rounded-2xl bg-white p-4">
           <View className="flex-row items-center justify-between">
             <Text className="text-base font-bold text-slate-900">

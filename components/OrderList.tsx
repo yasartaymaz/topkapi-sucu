@@ -161,7 +161,7 @@ export function OrderList({ orders, role, onRefresh, refreshing }: Props) {
         const palette = ORDER_STATUS_COLOR[item.status] ?? ORDER_STATUS_COLOR.pending;
         return (
           <Link href={{ pathname: detailPath as any, params: { id: item.id } }} asChild>
-            <Pressable className="rounded-2xl bg-white p-4 active:bg-slate-50">
+            <Pressable className={`rounded-2xl border-2 bg-white p-4 active:bg-slate-50 ${palette.border}`}>
               <View className="flex-row items-center justify-between">
                 <Text className="flex-1 text-base font-bold text-slate-900" numberOfLines={1}>
                   {item.primaryLabel}

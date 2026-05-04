@@ -32,11 +32,11 @@ export const ORDER_STATUS_LABEL: Record<string, string> = {
   canceled: 'İptal',
 };
 
-export const ORDER_STATUS_COLOR: Record<string, { bg: string; text: string }> = {
-  pending:    { bg: 'bg-amber-100',  text: 'text-amber-800' },
-  accepted:   { bg: 'bg-sky-100',    text: 'text-sky-800' },
-  preparing:  { bg: 'bg-indigo-100', text: 'text-indigo-800' },
-  delivering: { bg: 'bg-violet-100', text: 'text-violet-800' },
-  delivered:  { bg: 'bg-green-100',  text: 'text-green-800' },
-  canceled:   { bg: 'bg-slate-200',  text: 'text-slate-700' },
+export const ORDER_STATUS_COLOR: Record<string, { bg: string; text: string; border: string }> = {
+  pending:    { bg: 'bg-amber-100',  text: 'text-amber-800',  border: 'border-amber-300' },
+  accepted:   { bg: 'bg-sky-100',    text: 'text-sky-800',    border: 'border-sky-300' },
+  preparing:  { bg: 'bg-indigo-100', text: 'text-indigo-800', border: 'border-indigo-300' },
+  delivering: { bg: 'bg-violet-100', text: 'text-violet-800', border: 'border-violet-300' },
+  delivered:  { bg: 'bg-green-100',  text: 'text-green-800',  border: 'border-green-300' },
+  canceled:   { bg: 'bg-slate-200',  text: 'text-slate-700',  border: 'border-slate-300' },
 };
