@@ -40,32 +40,33 @@ export default function Signup() {
     }
 
     setSubmitting(true);
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-    });
-    if (signUpError || !signUpData.user) {
+    try {
+      // Profil otomatik olarak DB trigger tarafından oluşturulur (atomik).
+      // Bu yüzden ayrı bir profiles.insert çağrısına gerek yok.
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          data: {
+            role,
+            full_name: fullName.trim(),
+            phone: phone.trim(),
+          },
+        },
+      });
+
+      if (signUpError || !signUpData.user) {
+        Alert.alert('Kayıt başarısız', signUpError?.message ?? 'Bilinmeyen bir hata oluştu.');
+        return;
+      }
+
+      await refreshProfile();
+      router.replace('/');
+    } catch (err: any) {
+      Alert.alert('Kayıt başarısız', err?.message ?? 'Beklenmeyen bir hata oluştu. Lütfen tekrar dene.');
+    } finally {
       setSubmitting(false);
-      Alert.alert('Kayıt başarısız', signUpError?.message ?? 'Bilinmeyen bir hata oluştu.');
-      return;
     }
-
-    const { error: profileError } = await supabase.from('profiles').insert({
-      id: signUpData.user.id,
-      role,
-      full_name: fullName.trim(),
-      phone: phone.trim() || null,
-    });
-
-    if (profileError) {
-      setSubmitting(false);
-      Alert.alert('Profil oluşturulamadı', profileError.message);
-      return;
-    }
-
-    await refreshProfile();
-    setSubmitting(false);
-    router.replace('/');
   };
 
   return (

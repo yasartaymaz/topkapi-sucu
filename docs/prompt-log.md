@@ -1444,3 +1444,33 @@ Support
 
 ---
 
+## 2026-05-06 12:20:29Z
+
+yuklemeden once bir test yapsaydik
+
+---
+
+## 2026-05-06 12:21:14Z
+
+mesela bir hesap silindiginde musterinin ekranindaki siparislerin musterisinde sorun olur mu?
+
+---
+
+## 2026-05-06 12:23:09Z
+
+projeyi clida ac
+
+---
+
+## 2026-05-06 12:23:45Z
+
+hocama githubi gonderdim. kodlari cekince direk calistirabilir mi appi?
+
+---
+
+## 2026-05-06 12:26:40Z
+
+simdi yeni bir musteri kaydolurken kayit ola bastim ama butonda spinner donuyor devam etmiyor
+
+---
+
