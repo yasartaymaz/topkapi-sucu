@@ -1,10 +1,11 @@
 import { Link, Stack, useRouter } from 'expo-router';
-import { LogOut, Settings } from 'lucide-react-native';
-import { Pressable, Text, View } from 'react-native';
+import { LogOut, Settings, Trash2 } from 'lucide-react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BottomNav } from '@/components/BottomNav';
 import { useAuth } from '@/lib/auth';
+import { supabase } from '@/lib/supabase';
 
 export default function VendorProfile() {
   const { profile, signOut } = useAuth();
@@ -13,6 +14,42 @@ export default function VendorProfile() {
   const handleSignOut = async () => {
     await signOut();
     router.replace('/(auth)/role-select');
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Hesabı Sil',
+      'Dükkanını, ürünlerini, hizmet bölgelerini ve hesabını kalıcı olarak silmek istediğinden emin misin? Bu işlem geri alınamaz.',
+      [
+        { text: 'Vazgeç', style: 'cancel' },
+        {
+          text: 'Hesabımı Sil',
+          style: 'destructive',
+          onPress: () => {
+            Alert.alert(
+              'Son Onay',
+              'Hesabın ve dükkanın silinecek. Devam edeyim mi?',
+              [
+                { text: 'Vazgeç', style: 'cancel' },
+                {
+                  text: 'Evet, sil',
+                  style: 'destructive',
+                  onPress: async () => {
+                    const { error } = await supabase.rpc('delete_my_account');
+                    if (error) {
+                      Alert.alert('Hata', 'Hesap silinemedi. Lütfen tekrar dene.');
+                      return;
+                    }
+                    await signOut();
+                    router.replace('/(auth)/role-select');
+                  },
+                },
+              ],
+            );
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -57,6 +94,18 @@ export default function VendorProfile() {
           </View>
           <Text className="ml-3 flex-1 text-base font-semibold text-red-700">
             Çıkış yap
+          </Text>
+        </Pressable>
+
+        <Pressable
+          onPress={handleDeleteAccount}
+          className="mt-1 flex-row items-center rounded-2xl bg-white p-4 active:bg-slate-50"
+        >
+          <View className="h-10 w-10 items-center justify-center rounded-full bg-red-100">
+            <Trash2 size={18} color="#B91C1C" />
+          </View>
+          <Text className="ml-3 flex-1 text-base font-semibold text-red-700">
+            Hesabı sil
           </Text>
         </Pressable>
       </View>

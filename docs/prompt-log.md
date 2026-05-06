@@ -1353,3 +1353,94 @@ projede herhangi baska bir secret var mi sorun cikartacak?
 
 ---
 
+## 2026-05-04 22:48:46Z
+
+db reset password yaparsam ne olacak? proje calismayacak?
+
+---
+
+## 2026-05-04 22:50:46Z
+
+reset password ettim. emin misin app patlamayacak mi?
+
+---
+
+## 2026-05-04 22:52:24Z
+
+ok calisiyor, problemimiz yok.
+
+---
+
+## 2026-05-04 22:53:44Z
+
+tesekkurler
+
+---
+
+## 2026-05-06 12:10:15Z
+
+review cevabi geldi asagiya yaziyorum:
+
+---
+
+## 2026-05-06 12:10:28Z
+
+Hello, 
+
+Thank you for submitting the new app, SucuApp, for review. We noticed some issues that require your attention. Please see below for additional information.
+
+If you have any questions, we are here to help. Reply to this message in App Store Connect and let us know.
+
+Review Environment
+Submission ID: 2cba78d2-adeb-4ebb-9fc7-3825969a9733
+Review date: May 06, 2026
+Review Device: iPad Air 11-inch (M3)
+Version reviewed: 1.0 (2)
+
+Guideline 2.1(b) - Information Needed
+
+We have started our review, but we need additional information to continue. Specifically, it appears the app may access or include paid digital content or services, and we want to understand your business model before completing our review. 
+
+Next Steps
+
+Please review the following questions and provide as much detailed information about your business model as you can.
+
+1. Who are the users that will use the paid services in the app?
+2. Where can users purchase the services that can be accessed in the app?
+3. What specific types of previously purchased services can a user access in the app?
+4. What paid content, subscriptions, or features are unlocked within the app that do not use In-App Purchase?
+5. Can users purchase physical goods or services together with digital content in your app? If so, please describe how the physical and digital content are connected and why you bundle them together in a single purchase.
+Guideline 5.1.1(v) - Data Collection and Storage
+
+Issue Description
+
+The app supports account creation but does not include an option to initiate account deletion. Apps that support account creation must also offer account deletion to give users more control of the data they've shared while using an app.
+
+Follow these requirements when updating an app to support account deletion:
+
+- Only offering to temporarily deactivate or disable an account is insufficient.
+- If users need to visit a website to finish deleting their account, include a link directly to the website page where they can complete the process.
+- Apps may include confirmation steps to prevent users from accidentally deleting their account. However, only apps in highly-regulated industries may require users to use customer service resources, such as making a phone call or sending an email, to complete account deletion.
+
+Next Steps
+
+Update the app to support account deletion. Once account deletion has been added, or if it is already in place, reply to this message with a screen recording captured on a physical device that demonstrates:
+
+- Creating a new account or signing in with the demo account
+- Navigating to the account deletion option
+- The complete account deletion flow from initiation to confirmation
+
+Include the recording in the Notes field of the App Review Information section in App Store Connect for future submissions.
+
+If the app is unable to offer account deletion or needs to provide additional customer service flows to facilitate and confirm account deletion, either because the app operates in a highly-regulated industry or for some other reason, reply to App Review in App Store Connect and provide additional information or documentation. For questions regarding legal obligations, check with legal counsel.
+
+Resources
+
+Review frequently asked questions and learn more about the account deletion requirements.
+Support
+- Reply to this message in your preferred language if you need assistance. If you need additional support, use the Contact Us module.
+- Consult with fellow developers and Apple engineers on the Apple Developer Forums.
+- Provide feedback on this message and your review experience by completing a short survey.
+
+---
+
